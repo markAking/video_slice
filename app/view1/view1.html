@@ -1,0 +1,74 @@
+<div class="content">
+    <div class="row">
+        <div class="col-sm-3">
+            <ul>
+                <li ng-repeat="clip in clips" ng-class="isCurrent($index)" ng-click="ctrl.changeSource($index)">
+                    <p>{{clip.name}}</p>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-9">
+            <div videogular vg-player-ready="ctrl.onPlayerReady($API)"
+                 vg-complete="ctrl.onCompleteVideo()"
+                 vg-error="ctrl.onError($event)"
+                 vg-update-time="ctrl.onUpdateTime($currentTime, $duration)"
+                 vg-update-volume="ctrl.onUpdateVolume($volume)"
+                 vg-update-state="ctrl.onUpdateState($state)"
+                 vg-seeking="ctrl.onSeeking($currentTime, $duration)"
+                 vg-seeked="ctrl.onSeeked($currentTime, $duration)"
+                 vg-theme="ctrl.config.theme.url"
+                 vg-auto-play="ctrl.config.autoPlay"
+                 vg-plays-inline="ctrl.config.playsInline"
+                 vg-native-fullscreen="ctrl.config.nativeFullscreen"
+                 vg-clear-media-on-navigate="false"
+                 vg-start-time="ctrl.config.startTime"
+                 vg-virtual-clip-duration="ctrl.config.virtualDuration">
+                <vg-media vg-src="ctrl.config.sources"
+                          vg-tracks="ctrl.config.tracks"
+                          vg-loop="ctrl.config.loop"
+                          vg-preload="ctrl.config.preload"
+                          vg-native-controls="ctrl.config.controls">
+                </vg-media>
+
+                <vg-controls vg-autohide="ctrl.config.autoHide" vg-autohide-time="ctrl.config.autoHideTime">
+                    <vg-play-pause-button></vg-play-pause-button>
+                    <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+                    <vg-scrub-bar>
+                        <vg-scrub-bar-buffer></vg-scrub-bar-buffer>
+                        <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                    </vg-scrub-bar>
+                    <vg-time-display>{{ totalTime | date:'mm:ss' }}</vg-time-display>
+                    <vg-volume>
+                        <vg-mute-button></vg-mute-button>
+                        <vg-volume-bar></vg-volume-bar>
+                    </vg-volume>
+                    <vg-fullscreen-button></vg-fullscreen-button>
+                </vg-controls>
+
+                <vg-poster vg-url='ctrl.config.plugins.poster.url'></vg-poster>
+                <vg-buffering></vg-buffering>
+                <vg-overlay-play></vg-overlay-play>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-3 form-group">
+            <label>Name</label>
+            <input type="text" class="form-control"  ng-model="videoClip.name">
+        </div>
+        <div class="col-sm-3 form-group">
+            <label>Start</label>
+            <input type="text" class="form-control"  ng-model="videoClip.start">
+        </div>
+        <div class="col-sm-3 form-group">
+            <label>Duration</label>
+            <input type="text" class="form-control"  ng-model="videoClip.stop">
+        </div>
+        <div class="col-sm-3 buttons">
+            <button class="btn" ng-show="!isAdding" ng-click="addClip()">Add</button>
+            <button class="btn" ng-click="saveClip()">Save</button>
+            <button class="btn" ng-show="!isAdding" ng-click="removeClip()">Remove</button>
+        </div>
+    </div>
+</div>
